@@ -7,6 +7,7 @@ import TodoList from './components/todos/TodoList'
 import Settings from './components/settings/Settings'
 import ImageToTextPage from './components/ocr/ImageToText'
 import ChatPanel from './components/chat/ChatPanel'
+import FloatingButtons from './components/layout/FloatingButtons'
 import useAppStore from './store/useAppStore'
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
       </div>
 
       <ChatPanel />
+      <FloatingButtons />
     </div>
   )
 }

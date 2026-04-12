@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Plus, Search, Pencil, Trash2, FileDown, FileSpreadsheet, ScanText } from 'lucide-react'
+import { Plus, Search, Pencil, Trash2, FileDown, FileSpreadsheet, ScanText, Mic } from 'lucide-react'
 import { format } from 'date-fns'
 import useAppStore from '../../store/useAppStore'
 import StatusBadge from './StatusBadge'
 import OrderForm from './OrderForm'
 import OcrOrderImport from './OcrOrderImport'
+import VoiceOrderInput from './VoiceOrderInput'
 
 const STATUS_TABS = ['전체', '대기중', '보류중', '출고완료']
 const todayStr = format(new Date(), 'yyyy-MM-dd')
@@ -16,6 +17,7 @@ export default function OrderList() {
   const [showForm, setShowForm] = useState(false)
   const [editOrder, setEditOrder] = useState(null)
   const [showOcr, setShowOcr] = useState(false)
+  const [showVoice, setShowVoice] = useState(false)
 
   const filtered = orders.filter((o) => {
     const matchTab = tab === '전체' || o.status === tab
@@ -91,6 +93,13 @@ export default function OrderList() {
           >
             <FileDown className="w-3.5 h-3.5" />
             PDF
+          </button>
+          <button
+            onClick={() => setShowVoice(true)}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs bg-pink-50 text-pink-700 border border-pink-200 rounded-xl hover:bg-pink-100 transition"
+          >
+            <Mic className="w-3.5 h-3.5" />
+            음성 등록
           </button>
           <button
             onClick={() => setShowOcr(true)}
@@ -218,7 +227,16 @@ export default function OrderList() {
         <OcrOrderImport
           onClose={(count) => {
             setShowOcr(false)
-            if (count > 0) alert(`${count}건 발주가 등록되었습니다!`)
+            if (count > 0) alert(`${count}건 주문이 등록되었습니다!`)
+          }}
+        />
+      )}
+
+      {showVoice && (
+        <VoiceOrderInput
+          onClose={(count) => {
+            setShowVoice(false)
+            if (count > 0) alert(`${count}건 주문이 등록되었습니다!`)
           }}
         />
       )}
